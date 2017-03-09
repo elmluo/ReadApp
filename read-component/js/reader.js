@@ -6,7 +6,7 @@
      * 一些常用的变量
      */
     var navShow = false;
-
+    var fontContainerShow = false;
     /**
      * 可操作Dom元素对象
      */
@@ -14,8 +14,11 @@
         actionMid: document.getElementById('action_mid'),
         topNav: document.getElementById('top_nav'),
         bottomNav: document.getElementById('bottom_nav'),
-        bottomNavBk: document.getElementById('bottom_nav_bk')
-
+        bottomNavBk: document.getElementById('bottom_nav_bk'),
+        fontObj: document.getElementById('font_button'),
+        fontContainer: document.getElementsByClassName('font_container')[0],
+        fontContainerBk: document.getElementsByClassName('font_container')[1],
+        window: document.documentElement
     };
 
     /**
@@ -37,7 +40,7 @@
     }
 
     function readerData() {
-        
+
     }
 
     function renderFrame() {
@@ -60,8 +63,38 @@
                 Dom.bottomNav.style.display = "none";
                 Dom.bottomNavBk.style.display = "none";
                 navShow = false;
+                //同时隐藏字体设置栏
+                Dom.fontContainer.style.display = "none";
+                Dom.fontContainerBk.style.display = "none";
+                fontContainerShow = false
             }
-        })
+        });
+
+        //点击字体，显隐字体面板
+        Dom.fontObj.addEventListener("click", function () {
+            if (fontContainerShow == false) {
+                Dom.fontContainer.style.display = "block";
+                Dom.fontContainerBk.style.display = "block";
+                fontContainerShow = true;
+            } else {
+                Dom.fontContainer.style.display = "none";
+                Dom.fontContainerBk.style.display = "none";
+                fontContainerShow = false;
+            }
+        });
+
+        //滑动屏幕，隐藏上下菜单栏和字体面板
+        window.addEventListener("scroll", function () {
+            Dom.topNav.style.display = "none";
+            Dom.bottomNav.style.display = "none";
+            Dom.bottomNavBk.style.display = "none";
+            navShow = false;
+            Dom.fontContainer.style.display = "none";
+            Dom.fontContainerBk.style.display = "none";
+            fontContainerShow = false
+        });
+
+
     }
 
     main();
