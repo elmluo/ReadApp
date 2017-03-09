@@ -2,6 +2,10 @@
  * js for reader-components
  */
 (function () {
+    /**
+     * 一些常用的变量
+     */
+    var navShow = false;
 
     /**
      * 可操作Dom元素对象
@@ -33,7 +37,7 @@
     }
 
     function readerData() {
-
+        
     }
 
     function renderFrame() {
@@ -44,12 +48,19 @@
      * 组件事件监听交互部分
      */
     function eventsHandle() {
-        //点击唤出上下导航栏
-        Dom.actionMid.addEventListener("click", function(){
-            Dom.topNav.style.display = "block";
-            Dom.bottomNav.style.display = "block";
-            Dom.bottomNavBk.style.display = "block";
-
+        //点击显示和隐藏上下导航栏
+        Dom.actionMid.addEventListener("click", function () {
+            if (navShow == false) {
+                Dom.topNav.style.display = "block";
+                Dom.bottomNav.style.display = "block";
+                Dom.bottomNavBk.style.display = "block";
+                navShow = true;
+            } else {
+                Dom.topNav.style.display = "none";
+                Dom.bottomNav.style.display = "none";
+                Dom.bottomNavBk.style.display = "none";
+                navShow = false;
+            }
         })
     }
 
