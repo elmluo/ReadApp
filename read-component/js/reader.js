@@ -7,6 +7,7 @@
      */
     var navShow = false;
     var fontContainerShow = false;
+    var size = 14;
     /**
      * 可操作Dom元素对象
      */
@@ -18,17 +19,23 @@
         fontObj: document.getElementById('font_button'),
         fontContainer: document.getElementsByClassName('font_container')[0],
         fontContainerBk: document.getElementsByClassName('font_container')[1],
-        window: document.documentElement
+        largeFontBtn: document.getElementById('large_font'),
+        smallFontBtn: document.getElementById('small_font'),
+        fictionContainer: document.getElementById('fiction_container')
     };
 
     /**
-     * 所有方法的入口函数
+     * 所有封装方法的入口函数
      */
     function main() {
-        // var publicTools = publicTools()();
+        // var publicTools = publicTools();     函数 = 值(对象)。这样的赋值不对。
+        var commonTools = publicTools();
         eventsHandle();
     }
 
+    /**
+     * 组件使用的公共方法封装
+     */
     function publicTools() {
         var pre = "reader_";
         var setLocalStorage = function (key, value) {
@@ -37,6 +44,11 @@
         var getLocalStorage = function (key) {
             return localStorage.getItem(pre + key)
         };
+
+        return {
+            setLocalStorage: setLocalStorage,
+            getLocalStorage: getLocalStorage
+        }
     }
 
     function readerData() {
@@ -94,9 +106,16 @@
             fontContainerShow = false
         });
 
+        // 字体设置大小交互开发
+        Dom.largeFontBtn.addEventListener('click', function () {
+           ;
+            console.log(size);
+            Dom.fictionContainer.style.fontSize =  size += 1;
+            commonTools.setLocalStorage(size, Dom.fictionContainer.style.fontSize)
+            console.log(commonTools.getLocalStorage(size));
+        });
 
     }
 
     main();
-
 })();
