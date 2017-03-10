@@ -16,6 +16,7 @@
         bottomNav: document.getElementById('bottom_nav'),
         bottomNavBk: document.getElementById('bottom_nav_bk')
 
+
     };
 
     /**
@@ -37,7 +38,7 @@
     }
 
     function readerData() {
-        
+
     }
 
     function renderFrame() {
@@ -61,7 +62,10 @@
                 Dom.bottomNavBk.style.display = "none";
                 navShow = false;
             }
-        })
+        });
+
+        //点击显示显示和隐藏字体面板
+
     }
 
     main();
