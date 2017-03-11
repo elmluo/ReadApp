@@ -11,7 +11,8 @@
     var fontContainerShow = false;
     var curFontSize;
     var fontSize = commonTools.getLocalStorage(curFontSize);
-
+    var curBkColor;
+    var bkColor = commonTools.getLocalStorage(curBkColor);
 
     /**
      * 可操作Dom元素对象
@@ -27,7 +28,9 @@
         largeFontBtn: document.getElementById('large_font'),
         smallFontBtn: document.getElementById('small_font'),
         fictionContainer: document.getElementById('fiction_container'),
-        checkBkBox: document.getElementById('check_bk_box')
+        checkBkBox: document.getElementById('check_bk_box'),
+        nightBtn: document.getElementById('night_button'),
+        dayBtn: document.getElementById('day_button')
     };
 
     /**
@@ -43,7 +46,9 @@
      */
     function init() {
         //字体初始化
-        Dom.fictionContainer.style.fontSize = commonTools.getLocalStorage(curFontSize) + 'px';
+        Dom.fictionContainer.style.fontSize = fontSize + 'px';
+        //背景初始化
+        document.body.style.backgroundColor = bkColor;
     }
 
     /**
@@ -91,7 +96,7 @@
                 //同时隐藏字体设置栏
                 Dom.fontContainer.style.display = "none";
                 Dom.fontContainerBk.style.display = "none";
-                fontContainerShow = false
+                fontContainerShow = false;
             }
         });
 
@@ -132,6 +137,8 @@
             if (fontSize == 14) return;
             --fontSize;
             Dom.fictionContainer.style.fontSize = fontSize + 'px';
+            console.log(fontSize);
+            debugger;
             commonTools.setLocalStorage(curFontSize, fontSize);
         });
 
@@ -143,8 +150,25 @@
             if (target !== this) {
                 document.body.style.backgroundColor = target.style.backgroundColor;
                 target.parentNode.style.visibility = "visible";
-                // console.log(target.style.visibility);
+                commonTools.setLocalStorage(curBkColor, document.body.style.backgroundColor)
+
             }
+        });
+
+        // 白天黑夜阅读模式切换
+        Dom.nightBtn.addEventListener('click', function () {
+            this.style.display = "none";
+            Dom.dayBtn.style.display = "inline-block";
+            bkColor = "#283548";
+            document.body.style.backgroundColor = bkColor;
+            commonTools.setLocalStorage(curBkColor, bkColor)
+        });
+        Dom.dayBtn.addEventListener('click', function () {
+            this.style.display = "none";
+            Dom.nightBtn.style.display = "inline-block";
+            bkColor = "#e9dfc7";
+            document.body.style.backgroundColor = bkColor;
+            commonTools.setLocalStorage(curBkColor, bkColor);
         });
 
     }
