@@ -1,119 +1,131 @@
 <!DOCTYPE html>
 <html ng-app="app">
 <head>
-	<!--<script>-->
-		<!--var ctx = "http://127.0.0.1"-->
-	<!--</script>-->
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-	<meta name="format-detection" content="telephone=no">
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/main.css">
+    <!--<script>-->
+    <!--var ctx = "http://127.0.0.1"-->
+    <!--</script>-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-	<div id="root" class="container">
+<div id="root" class="container">
 
-		<div class="m-article-action" id="action_mid">
-			<div class="article-action-mid" ></div>
-		</div>
+    <div class="m-article-action" id="action_mid">
+        <div class="article-action-mid"></div>
+    </div>
 
-		<div id="top_nav" class="top-nav" style="display:none">
-			<div class="icon-back"></div>
-			<div class="nav-title">返回</div>
-		</div>
+    <div id="top_nav" class="top-nav" style="display:none">
+        <div class="icon-back"></div>
+        <div class="nav-title">返回</div>
+    </div>
 
-		<div id="fiction_chapter_title">
-			
-		</div>
+    <div id="fiction_chapter_title">
 
-		<div id="fiction_container" class="m-read-content">
-			 <h4>皇子第二春</h4>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse recusandae ea dolor iure numquam, aliquid placeat, officia assumenda sint ex error illum. Quo, assumenda temporibus quod voluptatibus nostrum mollitia, error adipisci eos at dolorum reiciendis harum, fuga ducimus earum vel, inventore rerum facilis officiis eveniet doloremque ipsam est molestiae laborum!
-			</p>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta quos tempore aperiam vero similique, omnis vitae voluptatibus explicabo deleniti excepturi corporis ipsam mollitia fugiat ex! Nihil itaque officiis tempore enim, corporis eos possimus alias repellat architecto, excepturi perspiciatis laudantium mollitia!
-			</p>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse recusandae ea dolor iure numquam, aliquid placeat, officia assumenda sint ex error illum. Quo, assumenda temporibus quod voluptatibus nostrum mollitia, error adipisci eos at dolorum reiciendis harum, fuga ducimus earum vel, inventore rerum facilis officiis eveniet doloremque ipsam est molestiae laborum!
-			</p>
-			<p>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse recusandae ea dolor iure numquam, aliquid placeat, officia assumenda sint ex error illum. Quo, assumenda temporibus quod voluptatibus nostrum mollitia, error adipisci eos at dolorum reiciendis harum, fuga ducimus earum vel, inventore rerum facilis officiis eveniet doloremque ipsam est molestiae laborum!
-			</p>
-		</div>
+    </div>
 
-		<div class="m-button-bar">
-			<ul class="u-tab">
-				<li id="prev_button">上一章</li>
-				<li id="next_button">下一章</li>
-			</ul>
-		</div>
-		
-		<div id="bottom_nav_bk" class="bottom-nav-bk" style="display:none"></div>
-		<div id ="bottom_nav"  class="bottom-nav" style="display:none">
-			<div class="item" id="menu_button">
-				<div class="item-warp">
-					<div class="icon-menu"></div>
-					<div class="icon-text">目录</div>
-				</div>
-			</div>
-			<div class="item" id="font_button">
-				<div class="item-warp">
-					<div class="icon-font"></div>
-					<div class="icon-font-current" style="display:none;"></div>
-					<div class="icon-text">字体</div>
-				</div>
-			</div>
-			<div class="item" id="night_button">
-				<div class="item-warp">
-					<div class="icon-night"></div>
-					<div class="icon-text">夜间</div>
-					<div class="icon-night-current" style="display:none;"></div>
-				</div>
-			</div>
-			<!-- <div class="item" id="day_button">
-				<div class="item-warp">
-					<div class="icon-day"></div>
-					<div class="icon-text">白天</div>
-				</div>
-			</div> -->
-		</div>
-		<div class="nav-pannel-bk font_container" style="display:none"></div>
-		<div class="nav-pannel font_container" id="font_container"  style="display:none">
-			<div class="child-mod">
-				<span>字号</span>
-				<button class="font-size-button" id="large_font">大</button>
-				<button class="font-size-button" id="small_font">小</button>
-			</div>
-			<div class="child-mod">
-				<span>背景</span>
-				<div class="bk-container">
-					<div class="bk-container-current"></div>
-				</div>
-				<div class="bk-container" style="background-color:#e9dfc7">
-					<div class="bk-container-current"></div>
-				</div>
-				<div class="bk-container" style="background-color:#a4a4a4">
-					<div class="bk-container-current" ></div>
-				</div>
-				<div class="bk-container" style="background-color:#cdefce">
-					<div class="bk-container-current"></div>
-				</div>
-				<div class="bk-container" style="background-color:#283548">
-					<div class="bk-container-current"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="lib/zepto.min.js"></script>
-	<script>
-		window.jQuery = $;
-	</script>
-	<script src="js/jquery.base64.js"></script>
-	<script src="js/jquery.jsonp.js"></script>
-	<script src="js/reader.js"></script>
-	<script>
+    <div id="fiction_container" class="m-read-content">
+        <h4>皇子第二春</h4>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse recusandae ea dolor iure numquam, aliquid
+            placeat, officia assumenda sint ex error illum. Quo, assumenda temporibus quod voluptatibus nostrum
+            mollitia, error adipisci eos at dolorum reiciendis harum, fuga ducimus earum vel, inventore rerum facilis
+            officiis eveniet doloremque ipsam est molestiae laborum!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta quos tempore aperiam vero similique, omnis
+            vitae voluptatibus explicabo deleniti excepturi corporis ipsam mollitia fugiat ex! Nihil itaque officiis
+            tempore enim, corporis eos possimus alias repellat architecto, excepturi perspiciatis laudantium mollitia!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse recusandae ea dolor iure numquam, aliquid
+            placeat, officia assumenda sint ex error illum. Quo, assumenda temporibus quod voluptatibus nostrum
+            mollitia, error adipisci eos at dolorum reiciendis harum, fuga ducimus earum vel, inventore rerum facilis
+            officiis eveniet doloremque ipsam est molestiae laborum!
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse recusandae ea dolor iure numquam, aliquid
+            placeat, officia assumenda sint ex error illum. Quo, assumenda temporibus quod voluptatibus nostrum
+            mollitia, error adipisci eos at dolorum reiciendis harum, fuga ducimus earum vel, inventore rerum facilis
+            officiis eveniet doloremque ipsam est molestiae laborum!
+        </p>
+    </div>
 
-	</script>
+    <div class="m-button-bar">
+        <ul class="u-tab">
+            <li id="prev_button">上一章</li>
+            <li id="next_button">下一章</li>
+        </ul>
+    </div>
+
+    <div id="bottom_nav_bk" class="bottom-nav-bk" style="display:none"></div>
+    <div id="bottom_nav" class="bottom-nav" style="display:none">
+        <div class="item" id="menu_button">
+            <div class="item-warp">
+                <div class="icon-menu"></div>
+                <div class="icon-text">目录</div>
+            </div>
+        </div>
+        <div class="item" id="font_button">
+            <div class="item-warp">
+                <div class="icon-font"></div>
+                <div class="icon-font-current" style="display:none;"></div>
+                <div class="icon-text">字体</div>
+            </div>
+        </div>
+        <div class="item" id="night_button">
+            <div class="item-warp">
+                <div class="icon-night"></div>
+                <div class="icon-text">夜间</div>
+                <div class="icon-night-current" style="display:none;"></div>
+            </div>
+        </div>
+        <!-- <div class="item" id="day_button">
+            <div class="item-warp">
+                <div class="icon-day"></div>
+                <div class="icon-text">白天</div>
+            </div>
+        </div> -->
+    </div>
+    <div class="nav-pannel-bk font_container" style="display:none"></div>
+    <div class="nav-pannel font_container" id="font_container" style="display:none">
+        <div class="child-mod">
+            <span>字号</span>
+            <button class="font-size-button" id="large_font">大</button>
+            <button class="font-size-button" id="small_font">小</button>
+        </div>
+        <div class="child-mod" id="check_bk_box">
+            <span>背景</span>
+            <div class="bk-container-current">
+                <div class="bk-container" style="background-color:#ffffff"></div>
+            </div>
+            <div class="bk-container-current">
+                <div class="bk-container" style="background-color:#e9dfc7"></div>
+            </div>
+            <div class="bk-container-current">
+                <div class="bk-container" style="background-color:#a4a4a4"></div>
+            </div>
+            <div class="bk-container-current">
+                <div class="bk-container" style="background-color:#cdefce"></div>
+            </div>
+            <div class="bk-container-current">
+                <div class="bk-container" style="background-color:#283548">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="lib/zepto.min.js"></script>
+<script>
+    window.jQuery = $;
+</script>
+<script src="js/jquery.base64.js"></script>
+<script src="js/jquery.jsonp.js"></script>
+<script src="js/reader.js"></script>
+<script>
+
+</script>
 </body>
 </html>

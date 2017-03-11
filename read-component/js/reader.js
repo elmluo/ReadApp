@@ -5,7 +5,7 @@
     /**
      * 一些常用的变量
      */
-    // var publicTools = publicTools();     函数 = 值(对象)。这样的赋值不对。
+        // var publicTools = publicTools();     函数 = 值(对象)。这样的赋值不对。
     var commonTools = publicTools();
     var navShow = false;
     var fontContainerShow = false;
@@ -26,7 +26,8 @@
         fontContainerBk: document.getElementsByClassName('font_container')[1],
         largeFontBtn: document.getElementById('large_font'),
         smallFontBtn: document.getElementById('small_font'),
-        fictionContainer: document.getElementById('fiction_container')
+        fictionContainer: document.getElementById('fiction_container'),
+        checkBkBox: document.getElementById('check_bk_box')
     };
 
     /**
@@ -41,6 +42,7 @@
      * 初始化方法
      */
     function init() {
+        //字体初始化
         Dom.fictionContainer.style.fontSize = commonTools.getLocalStorage(curFontSize) + 'px';
     }
 
@@ -121,16 +123,28 @@
         // 字体设置大小交互开发
         Dom.largeFontBtn.addEventListener('click', function () {
             //判断语句写在最前面前面妥当
-            if (fontSize == 20) return
+            if (fontSize == 20) return;
             ++fontSize;
             Dom.fictionContainer.style.fontSize = fontSize + 'px';
             commonTools.setLocalStorage(curFontSize, fontSize);
         });
         Dom.smallFontBtn.addEventListener('click', function () {
-            if (fontSize == 14) return
+            if (fontSize == 14) return;
             --fontSize;
             Dom.fictionContainer.style.fontSize = fontSize + 'px';
             commonTools.setLocalStorage(curFontSize, fontSize);
+        });
+
+        //字体面板当中“背景”切换
+        //事件委托
+        Dom.checkBkBox.addEventListener('click', function (ev) {
+            var ev = ev || window.event;
+            var target = ev.target || ev.srcElement;
+            if (target !== this) {
+                document.body.style.backgroundColor = target.style.backgroundColor;
+                target.parentNode.style.visibility = "visible";
+                // console.log(target.style.visibility);
+            }
         });
 
     }
