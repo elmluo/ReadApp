@@ -5,9 +5,14 @@
     /**
      * 一些常用的变量
      */
+    // var publicTools = publicTools();     函数 = 值(对象)。这样的赋值不对。
+    var commonTools = publicTools();
     var navShow = false;
     var fontContainerShow = false;
-    var size = 14;
+    var curFontSize;
+    var fontSize = commonTools.getLocalStorage(curFontSize);
+
+
     /**
      * 可操作Dom元素对象
      */
@@ -28,9 +33,15 @@
      * 所有封装方法的入口函数
      */
     function main() {
-        // var publicTools = publicTools();     函数 = 值(对象)。这样的赋值不对。
-        var commonTools = publicTools();
+        init();
         eventsHandle();
+    }
+
+    /**
+     * 初始化方法
+     */
+    function init() {
+        Dom.fictionContainer.style.fontSize = commonTools.getLocalStorage(curFontSize) + 'px';
     }
 
     /**
@@ -96,6 +107,7 @@
         });
 
         //滑动屏幕，隐藏上下菜单栏和字体面板
+        //也可以用H5classList.toggle('className') IE10
         window.addEventListener("scroll", function () {
             Dom.topNav.style.display = "none";
             Dom.bottomNav.style.display = "none";
@@ -108,11 +120,17 @@
 
         // 字体设置大小交互开发
         Dom.largeFontBtn.addEventListener('click', function () {
-           ;
-            console.log(size);
-            Dom.fictionContainer.style.fontSize =  size += 1;
-            commonTools.setLocalStorage(size, Dom.fictionContainer.style.fontSize)
-            console.log(commonTools.getLocalStorage(size));
+            //判断语句写在最前面前面妥当
+            if (fontSize == 20) return
+            ++fontSize;
+            Dom.fictionContainer.style.fontSize = fontSize + 'px';
+            commonTools.setLocalStorage(curFontSize, fontSize);
+        });
+        Dom.smallFontBtn.addEventListener('click', function () {
+            if (fontSize == 14) return
+            --fontSize;
+            Dom.fictionContainer.style.fontSize = fontSize + 'px';
+            commonTools.setLocalStorage(curFontSize, fontSize);
         });
 
     }
