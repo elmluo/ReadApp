@@ -1,5 +1,5 @@
 /**
- * js for reader-components
+ * 立即调用，变成私有作用域。
  */
 (function () {
     /**
@@ -38,9 +38,8 @@
      */
     function main() {
         init();
-        readerData().getChapterContent();
+        readerData().getChapterContent(3, function () {});
         eventsHandle();
-
     }
 
     /**
@@ -114,8 +113,6 @@
      */
     function readerData() {
 
-        var chapterId = 3;
-
         //拿到需要的初始化数据
         var init = function () {
 
@@ -130,14 +127,13 @@
 
         //根据章节id获取data文件内容(jsop跨域地址)，请求jsonp地址获取内容
         var getChapterContent = function (chapterId, cb) {
-            console.log(chapterId);
             commonTools._ajax("get", "./data/data" + chapterId + ".json", function (data) {       // response-->data
-
+                console.log(data.jsonp)
                 commonTools.getJSONP( data.jsonp, function (data) { 
-
+                    console.log(data)
                 });
             })
-        }
+        };
 
         return {
             init: init,
