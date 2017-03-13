@@ -108,10 +108,8 @@
 
         // 字体设置大小交互开发
         Dom.largeFontBtn.addEventListener('click', function () {
-           ;
-            console.log(size);
-            Dom.fictionContainer.style.fontSize =  size += 1;
-            commonTools.setLocalStorage(size, Dom.fictionContainer.style.fontSize)
+            Dom.fictionContainer.style.fontSize =  size++;
+            commonTools.setLocalStorage(size, Dom.fictionContainer.style.fontSize);
             console.log(commonTools.getLocalStorage(size));
         });
 
