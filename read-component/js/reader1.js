@@ -19,7 +19,6 @@
 //								debugger//断点，查看获取资源是否成功。
                     var data = $.base64.decode(result);//获取的数据需要插件base64解码
                     var json = decodeURIComponent(escape(data));//escape()将获取的进行ASCII编码成中文
-                    debugger;
                     callback(json);
                 }
             })
@@ -80,7 +79,7 @@
             // }).then(function(data){
             // 		UIcallback&&UIcallback(data);
             // });
-        }
+        };
 
         //todo 获得章节信息(包含所有章节标题，页码的json文件)之后的回调(获得章节信息之后要干嘛)。
         var getFictionInfo = function(callback){
