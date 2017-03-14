@@ -38,7 +38,10 @@
      */
     function main() {
         init();
-        readerData().getChapterContent(3, function () {});
+        readerData().getChapterContent(3, function (data) {
+            renderFrame(Dom.fictionContainer, data);
+        });
+
         eventsHandle();
     }
 
@@ -91,8 +94,8 @@
                 success: function (data, xOptions, textStatus) {
                     console.log(textStatus);
                     var result = $.base64.decode(data);
-                    var json = decodeURIComponent(escape(result));
-                    cb(json);
+                    var jsonObj = JSON.parse(decodeURIComponent(escape(result)));
+                    cb(jsonObj);
                 },
                 error: function (xOptions, textStatus) {
                     console.log(textStatus);
@@ -127,10 +130,10 @@
 
         //根据章节id获取data文件内容(jsop跨域地址)，请求jsonp地址获取内容
         var getChapterContent = function (chapterId, cb) {
-            commonTools._ajax("get", "./data/data" + chapterId + ".json", function (data) {       // response-->data
-                console.log(data.jsonp)
+            commonTools._ajax("get", "./data/data" + chapterId + ".json", function (data) {   // response-->data
                 commonTools.getJSONP( data.jsonp, function (data) { 
-                    console.log(data)
+                    console.log(data);
+                    cb && cb(data);
                 });
             })
         };
@@ -140,14 +143,19 @@
             getChapterInfos: getChapterInfos,
             getChapterContent: getChapterContent
         }
-
     }
 
     /**
-     * 数据的UI渲染
+     * 数据的DOM渲染
+     *     可以拼接字符串，也可以innerHTML
      */
-    function renderFrame() {
-
+    function renderFrame( DomContainer, data ) {
+        var html = "<h4>" + data.t + "</h4>" ;
+        for (var i=0; i<data.p.length; i++) {
+            html += "<p>" + data.p[i] + "</p>";
+        }
+        DomContainer.innerHTML = html;
+        
     }
 
     /**
