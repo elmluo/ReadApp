@@ -13,7 +13,8 @@
     var fontSize = commonTools.getLocalStorage(curFontSize);
     var curBkColor;
     var bkColor = commonTools.getLocalStorage(curBkColor);
-
+    var realChapterId = 3;
+    var readerData;
     /**
      * 可操作Dom元素对象
      */
@@ -38,10 +39,11 @@
      */
     function main() {
         init();
-        readerData().getChapterContent(3, function (data) {
-            renderFrame(Dom.fictionContainer, data);
-        });
 
+        readerData().initData(function(data){
+            renderFrame(Dom.fictionContainer, data)
+        });
+            
         eventsHandle();
     }
 
@@ -74,10 +76,6 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
-                    // debugger;
-                    // console.log(response);
-                    // console.log(response.result);
-                    // alert(response);
                     cb(response);
                 }
             };
@@ -116,15 +114,20 @@
      */
     function readerData() {
 
-        //拿到需要的初始化数据
-        var init = function () {
-
+        //拿到需要的初始化数据,传入渲染DOM回调
+        var initData = function (cbUI) {
+            getChapterInfos(function () {
+                getChapterContent( realChapterId, function (data) {
+                    cbUI && cbUI(data);
+                });
+            });
         };
 
         //获取章节信息
         var getChapterInfos = function (cb) {
             commonTools._ajax("get", "./data/chapter.json", function (data) {
                 //todo next()
+                cb && cb();
             });
         };
 
@@ -132,14 +135,13 @@
         var getChapterContent = function (chapterId, cb) {
             commonTools._ajax("get", "./data/data" + chapterId + ".json", function (data) {   // response-->data
                 commonTools.getJSONP( data.jsonp, function (data) { 
-                    console.log(data);
                     cb && cb(data);
                 });
             })
         };
 
         return {
-            init: init,
+            initData: initData,
             getChapterInfos: getChapterInfos,
             getChapterContent: getChapterContent
         }
