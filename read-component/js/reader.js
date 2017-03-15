@@ -13,7 +13,7 @@
     var fontSize = commonTools.getLocalStorage(curFontSize);
     var curBkColor;
     var bkColor = commonTools.getLocalStorage(curBkColor);
-    var realChapterId = 3;
+    
     var readerData;
     /**
      * 可操作Dom元素对象
@@ -31,7 +31,9 @@
         fictionContainer: document.getElementById('fiction_container'),
         checkBkBox: document.getElementById('check_bk_box'),
         nightBtn: document.getElementById('night_button'),
-        dayBtn: document.getElementById('day_button')
+        dayBtn: document.getElementById('day_button'),
+        preBtn: document.getElementById('prev_button'),
+        nextBtn: document.getElementById('next_button')
     };
 
     /**
@@ -39,9 +41,9 @@
      */
     function main() {
         init();
-
-        readerData().initData(function(data){
-            renderFrame(Dom.fictionContainer, data)
+        readerData = readerData();
+        readerData.initData(function(data){
+            renderUI(Dom.fictionContainer, data)
         });
             
         eventsHandle();
@@ -71,12 +73,12 @@
         };
 
         //ajax异步请求
-        var _ajax = function (method, url, cb) {
+        var _ajax = function (method, url, callback) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
-                    cb(response);
+                    callback(response);
                 }
             };
             xhr.open(method, url, true);
@@ -84,7 +86,7 @@
         };
 
         //插件跨域获取文章内容，base64插件解码，执行回调
-        var getJSONP = function (url, cb) {
+        var getJSONP = function (url, callback) {
             return $.jsonp({
                 url: url,
                 cache: true,
@@ -93,7 +95,7 @@
                     console.log(textStatus);
                     var result = $.base64.decode(data);
                     var jsonObj = JSON.parse(decodeURIComponent(escape(result)));
-                    cb(jsonObj);
+                    callback(jsonObj);
                 },
                 error: function (xOptions, textStatus) {
                     console.log(textStatus);
@@ -114,36 +116,61 @@
      */
     function readerData() {
 
-        //拿到需要的初始化数据,传入渲染DOM回调
-        var initData = function (cbUI) {
+        var realChapterId = 1;
+        var realChapterTotal;
+
+        //初始化数据,传入渲染DOM回调
+        var initData = function (callbackUI) {
             getChapterInfos(function () {
                 getChapterContent( realChapterId, function (data) {
-                    cbUI && cbUI(data);
+                    callbackUI && callbackUI(data);
                 });
             });
         };
 
         //获取章节信息
-        var getChapterInfos = function (cb) {
+        var getChapterInfos = function (callback) {
             commonTools._ajax("get", "./data/chapter.json", function (data) {
-                //todo next()
-                cb && cb();
+                // realChapterId = commonTools.getLocalStorage("curChapterId");  
+                if (realChapterId === null) {       // 如果刚开始没有本地存储章节Id，章节返回信息里面拿去初始化数据。
+                    realChapterId = data.chapters[1].chapter_id;
+                }
+                realChapterTotal = data.chapters.length;
+                callback && callback();
             });
         };
 
         //根据章节id获取data文件内容(jsop跨域地址)，请求jsonp地址获取内容
-        var getChapterContent = function (chapterId, cb) {
+        var getChapterContent = function (chapterId, callback) {
             commonTools._ajax("get", "./data/data" + chapterId + ".json", function (data) {   // response-->data
                 commonTools.getJSONP( data.jsonp, function (data) { 
-                    cb && cb(data);
+                    callback && callback(data);
                 });
             })
         };
 
+        // 向前翻页功能
+        var preChapter = function (callbackUI) {
+            realChapterId = parseInt(realChapterId, 10); 
+            if (realChapterId == 1) return;
+            realChapterId--;
+            getChapterContent(realChapterId, callbackUI);
+            commonTools.setLocalStorage("curChapterId", realChapterId);
+        };
+
+        // 向后翻页功能
+        var nextChapter = function (callbackUI) {
+            realChapterId = parseInt(realChapterId, 10);
+            if(realChapterId === realChapterTotal ) return;
+            realChapterId++;
+            getChapterContent(realChapterId, callbackUI);
+            commonTools.setLocalStorage("curChapterId", realChapterId)
+        }; 
+
         return {
             initData: initData,
-            getChapterInfos: getChapterInfos,
-            getChapterContent: getChapterContent
+            preChapter: preChapter,
+            nextChapter: nextChapter
         }
     }
 
@@ -151,13 +178,12 @@
      * 数据的DOM渲染
      *     可以拼接字符串，也可以innerHTML
      */
-    function renderFrame( DomContainer, data ) {
+    function renderUI(DomContainer, data) {
         var html = "<h4>" + data.t + "</h4>" ;
-        for (var i=0; i<data.p.length; i++) {
+        for (var i=0; i < data.p.length; i++) {
             html += "<p>" + data.p[i] + "</p>";
-        }
+        } 
         DomContainer.innerHTML = html;
-        
     }
 
     /**
@@ -221,7 +247,6 @@
             --fontSize;
             Dom.fictionContainer.style.fontSize = fontSize + 'px';
             console.log(fontSize);
-            debugger;
             commonTools.setLocalStorage(curFontSize, fontSize);
         });
 
@@ -243,7 +268,7 @@
             Dom.dayBtn.style.display = "inline-block";
             bkColor = "#283548";
             document.body.style.backgroundColor = bkColor;
-            commonTools.setLocalStorage(curBkColor, bkColor)
+            commonTools.setLocalStorage(curBkColor, bkColor);
         });
         Dom.dayBtn.addEventListener('click', function () {
             this.style.display = "none";
@@ -252,6 +277,18 @@
             document.body.style.backgroundColor = bkColor;
             commonTools.setLocalStorage(curBkColor, bkColor);
         });
+
+        // 向前向后翻页
+        Dom.preBtn.addEventListener('click', function () {
+            readerData.preChapter(function (data) {
+                renderUI(Dom.fictionContainer,data);
+            });
+        })
+        Dom.nextBtn.addEventListener('click', function () {
+            readerData.nextChapter(function (data) {
+                renderUI(Dom.fictionContainer,data);
+            });
+        })
     }
 
     main();
