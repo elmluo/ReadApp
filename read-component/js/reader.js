@@ -13,7 +13,6 @@
     var fontSize = commonTools.getLocalStorage(curFontSize);
     var curBkColor;
     var bkColor = commonTools.getLocalStorage(curBkColor);
-    
     var readerData;
     /**
      * 可操作Dom元素对象
@@ -33,7 +32,8 @@
         nightBtn: document.getElementById('night_button'),
         dayBtn: document.getElementById('day_button'),
         preBtn: document.getElementById('prev_button'),
-        nextBtn: document.getElementById('next_button')
+        nextBtn: document.getElementById('next_button'),
+        isLoading: document.getElementById('isLoading')
     };
 
     /**
@@ -123,6 +123,8 @@
         var initData = function (callbackUI) {
             getChapterInfos(function () {
                 getChapterContent( realChapterId, function (data) {
+                    // 拿到章节内容，隐藏加载动画。
+                    Dom.isLoading.style.display = "none";
                     callbackUI && callbackUI(data);
                 });
             });
